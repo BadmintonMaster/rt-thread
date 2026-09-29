@@ -213,7 +213,7 @@
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_SERIAL_BYPASS
 #define RT_USING_CLOCK_TIME
-#define CLOCK_TIMER_FREQ 0
+#define CLOCK_TIMER_FREQ 27000000
 #define RT_USING_NULL
 #define RT_USING_ZERO
 #define RT_USING_RANDOM
@@ -480,6 +480,10 @@
 
 /* end of Kendryte SDK */
 
+/* MM32 HAL & SDK Drivers */
+
+/* end of MM32 HAL & SDK Drivers */
+
 /* WCH HAL & SDK Drivers */
 
 /* end of WCH HAL & SDK Drivers */
@@ -511,6 +515,14 @@
 /* FT32 HAL & SDK Drivers */
 
 /* end of FT32 HAL & SDK Drivers */
+
+/* NOVOSNS Drivers */
+
+/* end of NOVOSNS Drivers */
+
+/* N32 Drivers */
+
+/* end of N32 Drivers */
 /* end of HAL & SDK Drivers */
 
 /* sensors drivers */
@@ -604,6 +616,7 @@
 #define BSP_SD_MNT_DEVNAME "sd0p1"
 /* end of Drivers Configuration */
 #define BOARD_C908
+#define XUANTIE_SVPBMT 1
 #define __STACKSIZE__ 65536
 #define BSP_ROOTFS_TYPE_ELMFAT
 #define BSP_RISCV_FPU_D

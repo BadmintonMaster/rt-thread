@@ -1,0 +1,10 @@
+from building import *
+
+cwd     = GetCurrentDir()
+src     = Glob('*.c')
+CPPPATH = [cwd]
+
+# Only compiled when BSP_USING_PERF_TEST is enabled (scons --menuconfig).
+group = DefineGroup('perf', src, depend = ['BSP_USING_PERF_TEST'], CPPPATH = CPPPATH)
+
+Return('group')

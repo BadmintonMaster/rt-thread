@@ -21,9 +21,44 @@ config BOARD_C908
     select ARCH_REMAP_KERNEL if RT_USING_SMART
     default y
 
+config XUANTIE_SVPBMT
+    int "XuanTie PTE attribute bits (bit59-63) instead of standard Svpbmt"
+    default 1
+    help
+        C908 MMU page-table-entry cache attribute bits use the XuanTie
+        private extension (SEC/SHARE/BUF/CACHE/SO at bit59-63), NOT the
+        RISC-V standard Svpbmt extension (bit61-62). Must be 1 on K230:
+        with standard Svpbmt encoding, normal memory is interpreted as
+        non-cacheable and device memory as cacheable, which crashes the
+        kernel at early boot (Instruction Page Fault at garbage address).
+        Must remain an 'int' type because riscv_mmu.h tests it with #if.
+
 config __STACKSIZE__
     int "stack size for interrupt"
     default 4096
+
+menuconfig BSP_USING_PERF_TEST
+    bool "Enable C908 memory-hierarchy performance test suite"
+    default n
+    help
+        Adds finsh/msh commands perf_lat / perf_bw / perf_tlb / perf_branch /
+        perf_all that benchmark the C908 TLB / TWU (page-walk) / cache against
+        the ARM Cortex-A53 reference. Cycle-counter based, runs in S-mode.
+        See bsp/k230/perf/PERF_TEST_GUIDE.md for methodology and usage.
+
+if BSP_USING_PERF_TEST
+    config BSP_PERF_MAX_WORKSET_MB
+        int "Max working-set size for the sweeps (MB)"
+        default 8
+        help
+            Largest buffer the latency/bandwidth sweeps allocate from the
+            RT-Smart heap. Must be well below RT-Smart heap size (32 MB by
+            default). 8 MB covers L1/L2 and the 4KiB-page TLB reach knees.
+
+    config BSP_PERF_REPEAT
+        int "Repetitions per data point"
+        default 7
+endif
 
 choice BSP_ROOTFS_TYPE
     prompt "Root File-System type"
